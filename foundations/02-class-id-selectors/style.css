@@ -1,0 +1,21 @@
+
+
+.number1 {
+    background-color: rgb(200, 77, 171);
+    font-family: Verdana, DejaVu Sans, sans-serif;
+
+}
+#number2{
+    color:blue;
+    font-size: 36px;
+}
+.number4{
+    font-size: 24px;
+}
+
+#number3{
+    background-color: lightgreen;
+    font-size: 24px;
+    font-weight: 700;
+
+}
