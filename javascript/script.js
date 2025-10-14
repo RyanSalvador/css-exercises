@@ -1,44 +1,54 @@
-// JavaScript básico para interactividad
+console.log("Hello, World!"); // ¡Corregido!
 
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Obtener referencias a elementos del DOM
-    const boton = document.getElementById('miBoton');
-    const mensajeElemento = document.getElementById('mensaje');
-    
-    // Contador para los clics
-    let contadorClics = 0;
-    
-    // Función que se ejecuta al hacer clic en el botón
-    function manejarClic() {
-        contadorClics++;
-        mensajeElemento.textContent = `¡Has hecho clic ${contadorClics} ${contadorClics === 1 ? 'vez' : 'veces'}!`;
-        
-        // Cambiar el color del mensaje basado en el número de clics
-        if (contadorClics <= 3) {
-            mensajeElemento.style.color = 'green';
-        } else if (contadorClics <= 6) {
-            mensajeElemento.style.color = 'orange';
-        } else {
-            mensajeElemento.style.color = 'red';
+function getComputerChoice() {
+    const choices = ['pidra', 'papel', 'tijera'];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
+}
+function getHumanChoice(){
+    const choices = ['piedra', 'papel', 'tijera'];
+    let UserInput = prompt("Elige Piedra, Papel o Tijera ");
+    UserInput = UserInput.toLowerCase();
+    if (choices.includes(UserInput)) {
+        return UserInput;
+    } else {
+        alert("Elección inválida. Por favor, elige Piedra, Papel o Tijera.");
+        return getHumanChoice();
+    }
+
+}
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === computerSelection) {
+        return "Empate!";
+    } else if (
+        (playerSelection === 'piedra' && computerSelection === 'tijera') ||
+        (playerSelection === 'papel' && computerSelection === 'piedra') ||
+        (playerSelection === 'tijera' && computerSelection === 'papel')
+    ) {
+        return `¡Ganaste! ${playerSelection} vence a ${computerSelection}`;
+    } else {
+        return `Perdiste! ${computerSelection} vence a ${playerSelection}`;
+    }}
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    for (let round = 1; round <= 5; round++) {
+        const playerSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        const result = playRound(playerSelection, computerSelection);
+        console.log(`Ronda ${round}: ${result}`);
+        if (result.startsWith("¡Ganaste!")) {
+            playerScore++;
+        } else if (result.startsWith("Perdiste!")) {
+            computerScore++;
         }
+        console.log(`Puntuación - Tú: ${playerScore}, Computadora: ${computerScore}`);
     }
-    
-    // Agregar event listener al botón
-    boton.addEventListener('click', manejarClic);
-    
-    // Mensaje de bienvenida en la consola
-    console.log('¡JavaScript cargado correctamente!');
-    
-    // Función adicional para mostrar la hora actual
-    function mostrarHora() {
-        const ahora = new Date();
-        const hora = ahora.toLocaleTimeString('es-ES');
-        console.log(`Hora actual: ${hora}`);
+    if (playerScore > computerScore) {
+        console.log("¡Felicidades! ¡Ganaste el juego!");
+    } else if (computerScore > playerScore) {
+        console.log("Lo siento, perdiste el juego.");
+    } else {
+        console.log("El juego terminó en empate.");
     }
-    
-    // Mostrar la hora cada 5 segundos
-    setInterval(mostrarHora, 5000);
-    mostrarHora(); // Mostrar inmediatamente
-});
+}
